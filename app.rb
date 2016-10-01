@@ -30,7 +30,7 @@ class App < Sinatra::Base
 
     begin
       RunnerJob.perform_async git_branch
-      log_and_halt(200, :info, "Deployment started for branch \"#{branch}\"")
+      log_and_halt(200, :info, "Deployment started for branch \"#{git_branch}\"")
     rescue KeyError
       log_and_halt(400, :warn, 'Request missing `ref` param')
     end
