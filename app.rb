@@ -36,6 +36,11 @@ class App < Sinatra::Base
     end
   end
 
+  get '/ping' do
+    body "pong\n"
+    halt 200
+  end
+
   private
   def valid_secret?
     env.fetch('HTTP_X_GITLAB_TOKEN', false) == settings.secret
