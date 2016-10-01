@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+r10k_dir=/etc/puppetlabs/r10k
+
+if [ -z $GIT_REMOTE ]; then
+  echo 'Error: $GIT_REMOTE is undefined'
+  exit 1
+fi
+
+[ -n $DEBUG ] && echo "Configuring R10k to use $GIT_REMOTE"
+mkdir -p $r10k_dir
+cat > $r10k_dir/r10k.yaml <<-EOF
+:cachedir: /var/cache/r10k
+
+:sources:
+  :my-org:
+    remote: $GIT_REMOTE
+    basedir: /etc/puppetlabs/code/environments
+EOF

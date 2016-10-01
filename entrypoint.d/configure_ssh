@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+ssh_dir=/home/r10k/.ssh
+
+if [ -z "$GIT_DEPLOY_KEY" ] && [ ! -f $ssh_dir/id_rsa ]; then
+  echo "Either set \$GIT_DEPLOY_KEY or provide $ssh_dir/id_rsa."
+  exit 1
+elif [ -n "$GIT_DEPLOY_KEY" ]; then
+  [ -n $DEBUG ] && echo 'Configuring ssh with $GIT_DEPLOY_KEY'
+  mkdir -p $ssh_dir
+  echo "$GIT_DEPLOY_KEY" > $ssh_dir/id_rsa
+  chown -R r10k $ssh_dir
+  chmod 700 $ssh_dir
+  chmod 600 $ssh_dir/*
+else
+  [ -n $DEBUG ] && echo "ssh is preconfigured"
+fi
