@@ -17,6 +17,9 @@ VOLUME /var/cache/r10k # r10k cache
 VOLUME /etc/puppetlabs/code/environments # puppet environments
 
 EXPOSE 8080
+# Disable ssh host key check as there is no shell to accept it in
+RUN echo "Host *" >> /etc/ssh/ssh_config && \
+    echo "  StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
 COPY . /app
 WORKDIR /app
