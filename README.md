@@ -7,9 +7,11 @@ Puppet deployments with GitLab's webhooks and R10k
 
 Set the following environment variables:
 
-`WEBHOOK_SECRET` | The secret specified when creating the webhook in GitLab
-`GIT_REMOTE`     | Path to your git repository
-`GIT_DEPLOY_KEY` | SSH private key for deployment
+| Variable         | Description                                              |
+|------------------|:--------------------------------------------------------:|
+| `WEBHOOK_SECRET` | The secret specified when creating the webhook in GitLab |
+| `GIT_REMOTE`     | Path to your git repository                              |
+| `GIT_DEPLOY_KEY` | SSH private key for deployment                           |
 
 You will also need to point your loadbalancer to or forward port 8080.
 
@@ -20,6 +22,7 @@ $ docker run -p 8080:8080 \
              -e WEBHOOK_SECRET=topsecret \
              -e GIT_REMOTE=git@github.com:erlend/docker-r10k.git \
              -e GIT_DEPLOY_KEY="`cat ~/.ssh/id_rsa`" \
+             -v puppet-environments:/etc/puppetlabs/code/environments \
              erlend/r10k
 ```
 
@@ -30,6 +33,7 @@ $ docker run -p 8080:8080 \
              -e WEBHOOK_SECRET=topsecret \
              -e GIT_REMOTE=git@github.com:erlend/docker-r10k.git \
              -v ~/.ssh/id_rsa:/home/r10k/.ssh/id_rsa:ro \
+             -v puppet-environments:/etc/puppetlabs/code/environments \
              erlend/r10k
 ```
 
