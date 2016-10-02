@@ -1,13 +1,11 @@
 ENV['RACK_ENV'] = 'test'
 ENV['WEBHOOK_SECRET'] = 'secrettoken'
-require 'json'
 require 'pry'
 require 'rack/test'
 require_relative '../app'
 
 def fixture(name)
-  file = File.join(__dir__, "fixtures/#{name}.json")
-  JSON.parse File.read(file)
+  File.read File.join(__dir__, "fixtures/#{name}.json")
 end
 
 RSpec.configure do |config|

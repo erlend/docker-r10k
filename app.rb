@@ -1,3 +1,4 @@
+require 'json'
 require 'sinatra/base'
 require 'sucker_punch'
 require 'cocaine'
@@ -47,7 +48,11 @@ class App < Sinatra::Base
   end
 
   def git_branch
-    params.fetch('ref')[%r{[^/]*\z}, 0]
+    parsed_data.fetch('ref')[%r{[^/]*\z}, 0]
+  end
+
+  def parsed_data
+    @parsed_data ||= JSON.load(request.body) || {}
   end
 
   def log_and_halt(status, log_level, message)
