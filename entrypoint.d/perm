@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+
+chown r10k /var/cache/r10k /etc/puppetlabs/code/environments
