@@ -13,16 +13,18 @@ RUN apk add --no-cache \
 # Create non-root user
 RUN adduser -D r10k
 
-VOLUME /var/cache/r10k # r10k cache
-VOLUME /etc/puppetlabs/code/environments # puppet environments
-
-EXPOSE 8080
 # Disable ssh host key check as there is no shell to accept it in
 RUN echo "Host *" >> /etc/ssh/ssh_config && \
     echo "  StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
+# Install app
 COPY . /app
 WORKDIR /app
 RUN bundle install --without=test
+
+EXPOSE 8080
+
+VOLUME /var/cache/r10k # r10k cache
+VOLUME /etc/puppetlabs/code/environments # puppet environments
 
 ENTRYPOINT ["./entrypoint.sh"]
