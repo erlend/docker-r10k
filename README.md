@@ -37,3 +37,16 @@ $ docker run -p 8080:8080 \
              erlend/r10k
 ```
 
+## Custom r10k configurations
+
+To use a customized r10k configuration, mount it to the default location. `GIT_REMOTE` becomes unnecessary at that point.
+
+```
+$ docker run -p 8080:8080 \
+             -e WEBHOOK_SECRET=topsecret \
+             -v ~/.ssh/id_rsa:/home/r10k/.ssh/id_rsa:ro \
+             -v /etc/puppetlabs/r10k/r10k.yaml:/etc/puppetlabs/r10k/r10k.yaml:ro \
+             -v puppet-environments:/etc/puppetlabs/code/environments:rw \
+             erlend/r10k
+```
+
