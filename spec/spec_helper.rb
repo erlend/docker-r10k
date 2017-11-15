@@ -68,4 +68,16 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  config.before do
+    App.settings.r10k_bin = 'echo'
+
+    json = { sources: [{ environments: ['master'] }] }.to_json
+    allow(Cocaine::CommandLine).to receive(:new)
+      .with('echo', 'deploy display --fetch --format json')
+      .and_return(double run: json)
+    allow(Cocaine::CommandLine).to receive(:new)
+      .with('echo', 'deploy environment -p :branch')
+      .and_call_original
+  end
 end

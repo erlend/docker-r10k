@@ -7,7 +7,6 @@ RSpec.describe App do
 
   describe 'POST /' do
     before do
-      app.configure { |c| c.set(:r10k_bin, 'echo') }
       header 'X-Gitlab-Token', secret
       post '/', parameters
     end

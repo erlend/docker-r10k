@@ -8,13 +8,24 @@ class RunnerJob
 
   def perform(branch)
     return false if branch.to_s == ''
-    command.run(branch: branch)
+    if valid_environment(branch)
+      command.run(branch: branch)
+    else
+      logger.info("Ignoring hook for non-existent environment: #{branch}")
+    end
   end
 
   private
-  def command
-    r10k_bin = App.settings.r10k_bin
-    Cocaine::CommandLine.new(r10k_bin, 'deploy environment -p :branch')
+  def valid_environment(branch)
+    get_environments = command('deploy display --fetch --format json')
+    environment_json = JSON.load(get_environments.run)
+    environment_json['sources'].find do |source|
+      source['environments'].include?(branch)
+    end
+  end
+
+  def command(args = 'deploy environment -p :branch')
+    Cocaine::CommandLine.new(App.settings.r10k_bin, args)
   end
 end
 
