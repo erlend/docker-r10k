@@ -1,7 +1,7 @@
 FROM ruby:alpine
 MAINTAINER Erlend Finvåg <erlend@spiri.no>
 
-ARG R10K_VERSION="~> 2.4"
+ARG R10K_VERSION="~> 3.0"
 ENV GIT_DEPLOY_KEY=""
 ENV GIT_REMOTE=""
 ENV WEBHOOK_SECRET=""
