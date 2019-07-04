@@ -1,7 +1,7 @@
 require 'json'
 require 'sinatra/base'
 require 'sucker_punch'
-require 'cocaine'
+require 'terrapin'
 
 class RunnerJob
   include SuckerPunch::Job
@@ -25,7 +25,7 @@ class RunnerJob
   end
 
   def command(args = 'deploy environment -p :branch')
-    Cocaine::CommandLine.new(App.settings.r10k_bin, args)
+    Terrapin::CommandLine.new(App.settings.r10k_bin, args)
   end
 end
 

@@ -1,14 +1,16 @@
-FROM alpine:3.3
+FROM ruby:alpine
 MAINTAINER Erlend Finvåg <erlend@spiri.no>
 
+ARG R10K_VERSION="~> 2.4"
 ENV GIT_DEPLOY_KEY=""
 ENV GIT_REMOTE=""
 ENV WEBHOOK_SECRET=""
 
 # Install prereqiusites
-RUN apk add --no-cache \
-      ruby-unicorn ruby-json ruby-bundler ruby-io-console \
-      git openssh-client su-exec
+RUN apk add build-base git openssh-client su-exec && \
+    gem install -N unicorn r10k:"$R10K_VERSION" && \
+    apk del build-base && \
+    rm /var/cache/apk/*
 
 # Create non-root user
 RUN adduser -D r10k
