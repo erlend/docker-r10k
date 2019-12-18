@@ -54,7 +54,7 @@ GEM
       multi_json (~> 1.10)
       puppet_forge (~> 2.2)
       semantic_puppet (~> 0.1.0)
-    rack (1.6.4)
+    rack (1.6.12)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
